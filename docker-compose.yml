@@ -1,0 +1,22 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: "postgres://vanny:020408@database/vashol"
+
+  database:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: vanny
+      POSTGRES_PASSWORD: 020408
+      POSTGRES_DB: vashol
+
