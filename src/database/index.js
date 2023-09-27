@@ -1,6 +1,22 @@
 const config = require("../../knexfile");
 const knex = require("knex");
+const mongoose = require("mongoose");
+const ChatHistory = require("./chatHistory");
 
-const connection = knex(config.development);
+const postgresConnection = knex(config.development);
 
-module.exports = connection;
+module.exports = {
+    postgresConnection,
+    mongoose,
+};
+mongoose.connect("\"mongodb://vanny:020408@mongo:27017/vashol", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+const createChatHistoryCollection = async () => {
+    await mongoose.connection.db.createCollection("chat_histories");
+    mongoose.connection.close();
+};
+
+createChatHistoryCollection();

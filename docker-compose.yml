@@ -8,8 +8,10 @@ services:
       - "3000:3000"
     depends_on:
       - database
+      - mongo
     environment:
       DATABASE_URL: "postgres://vanny:020408@database/vashol"
+      MONGO_URL: "mongodb://vanny:020408@mongo:27017/vashol"
 
   database:
     image: postgres:latest
@@ -20,3 +22,10 @@ services:
       POSTGRES_PASSWORD: 020408
       POSTGRES_DB: vashol
 
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: vanny
+      MONGO_INITDB_ROOT_PASSWORD: 020408
